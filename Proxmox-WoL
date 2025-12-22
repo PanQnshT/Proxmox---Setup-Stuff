@@ -1,0 +1,4 @@
+nano /etc/network/interfaces (w przed ostatniej linijce)
+ post-up /usr/sbin/ethtool -s eno1 wol g
+CTRL+X -> Y -> ENTER
+reboot
