@@ -1,0 +1,9 @@
+X - 1,2... or b,c...
+xxx - 100,101...
+
+-> Shell
+lsblk
+nano /etc/pve/qemu-server/xxx.conf
+scsiX: /dev/sdX
+chown root:kvm /dev/sdX
+chmod 660 /dev/sdX
