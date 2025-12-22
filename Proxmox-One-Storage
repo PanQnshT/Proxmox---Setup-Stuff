@@ -1,0 +1,7 @@
+Datacenter -> Storage
+local -> Edit -> Content (Select All)
+local-lvm -> Remove
+ -> Shell
+lvremove /dev/pve/data
+lvresize -l +100%FREE /dev/pve/root
+resize2fs /dev/mapper/pve-root
