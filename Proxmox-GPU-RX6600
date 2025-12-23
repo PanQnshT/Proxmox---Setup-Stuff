@@ -1,0 +1,42 @@
+PCI GPU PPassthrough (pve):
+nano /etc/default/grub
+ GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on iommu=pt pcie_acs_override=downstream,multifunction video=efifb:off"
+update-grub
+update-initramfs -u -k all
+reboot
+
+find /lib/modules/$(uname -r) -type f -name 'vfio*'
+nano /etc/modules
+ vfio
+ vfio_iommu_type1
+ vfio_pci
+ vfio_pci_core
+update-initramfs -u -k all
+reboot
+
+lspci -nn | grep "05:00"
+echo "options vfio-pci ids=1002:73ff,1002:ab28" > /etc/modprobe.d/vfio.conf
+echo "blacklist amdgpu" > /etc/modprobe.d/blacklist-amdgpu.conf
+update-initramfs -u -k all
+reboot
+
+nano /etc/modprobe.d/vfio.conf
+ options vfio-pci ids=1002:73ff,1002:ab28 disable_vga=1
+nano /etc/modprobe.d/blacklist-gpu.conf
+ blacklist amdgpu
+ blacklist radeon
+ blacklist snd_hda_intel
+update-initramfs -u -k all
+reboot
+
+https://www.techpowerup.com/vgabios/259939/259939
+https://winscp.net/eng/download.php
+RX6600.rom -> /usr/share/kvm/
+nano /etc/pve/qemu-server/100.conf
+ hostpci0: 0000:05:00,pcie=1,romfile=RX6600.rom
+reboot
+
+dmesg | grep 'remapping'
+echo "blacklist amdgpu" >> /etc/modprobe.d/blacklist.conf
+echo "blacklist radeon" >> /etc/modprobe.d/blacklist.conf
+reboot
