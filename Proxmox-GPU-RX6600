@@ -1,4 +1,4 @@
-PCI GPU PPassthrough (pve):
+PCI GPU Passthrough in Proxmox 9.0+ (pve):
 nano /etc/default/grub
 INTEL -> GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on iommu=pt pcie_acs_override=downstream,multifunction nofb nomodeset video=vesafb:off,efifb:off"
 AMD ->   GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on iommu=pt pcie_acs_override=downstream,multifunction nofb nomodeset video=vesafb:off,efifb:off"
