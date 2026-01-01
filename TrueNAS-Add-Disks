@@ -4,7 +4,9 @@ xxx - 100,101...
 -> Shell
 lsblk
 nano /etc/pve/qemu-server/xxx.conf
-scsiX: /dev/sdX
+scsiX: /dev/sdX (jeśli dysk jest HDD) LUB
+scsiX: /dev/sdX,discard=on,ssd=1 (jeśli tystk jest SSD)
+scsihw: virtio-scsi-single
 CTRL+X -> Y -> ENTER
 chown root:kvm /dev/sdX
 chmod 660 /dev/sdX
